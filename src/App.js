@@ -4,6 +4,7 @@ import './App.css'
 import BookShelves from './bookshelf'
 import { Route, Router, Switch } from 'react-router-dom'
 import history from "./History";
+import SearchBook from './searchBooks'
 
 class BooksApp extends React.Component {
   state = {
@@ -77,6 +78,12 @@ class BooksApp extends React.Component {
               <Switch>
                   <Route exact path="/" render={()=> (
                       <BookShelves bookList={this.state.listOfBooks} onUpdateShelf={this.updateShelf.bind(this)}/>
+                  )} />
+                  <Route path="/search" render={({history})=> (
+                      <SearchBook listOfSearchedBooks={this.state.listOfSearchedBooks} searchBooks={this.searchBooks.bind(this)} onUpdateShelf={this.updateShelf.bind(this)} onBackPress={()=> {
+                          this.clearSearchResult();
+                          history.push("/");
+                      }} />
                   )} />
               </Switch>
           </Router>
